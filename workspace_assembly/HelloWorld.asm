@@ -2,32 +2,8 @@
 
 section .text
 global CMAIN
-CMAIN:
-        
-        mov rbp, rsp; for correct debugging
-
-    ; 8bit = 1 byte
-    ; 16bit = 2 bytes = 1 word
-    ; 32bit = 4 bytes = 2 words = 1 dword(double-word)
-    ; 64bit = 8 bytes = 4 workds = 2 dword = 1 qword (quad-word)
-    
-    ; mov reg1, cst
-    ; mov reg1, reg2
-    
-    mov eax, 0x1234
-    mov rbx, 0x12345678
-    mov cl, 0xff
-    
-    mov al, 0x00
-    
-    ; 메모리 <-> 레지스터
-    ;mov rax, a ; a라는 바구니의 주소 값을 rax에 복사
-    ;mov rax, [a] ; a라는 바구니 안에 있는 값을 rax에 복
-    mov al, [a]
-    
-    mov [a], byte 0x55 
-    mov [a], word 0x6666
-    mov [a], cl
+CMAIN:        
+    mov rbp, rsp; for correct debugging
 
     xor rax, rax
     ret
@@ -41,11 +17,18 @@ CMAIN:
     ; [크기] db(1) dw(2) dd(4) dq(8)
     
 section .data
+    msg db 'Hello World', 0x00
+
     a db 0x11 ; [0x11]
-    b dw 0x2222
-    c dd 0x33333333
-    d dq 0x4444444444444444
     
+    b dd 0x12345678
+
+    ; 엔디안
+    ; 빅 엔디안 vs 리틀엔디안
+    ; - 빅 엔디안 : 숫자 비교에 유리 (큰 숫자만 비교하면 편하기 때문)
+    ; - 리틀 엔디안 : 캐스팅에 유리 (작은 값을 불러오기 편함)
+    
+
     ; 초기화 되지 않은 데이터
     ; [변수이름] [크기] [초기값]
     ; [크기] resb(1) resw(2) resd(4) resq(8)

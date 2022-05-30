@@ -3,25 +3,25 @@
 section .text
 global CMAIN
 CMAIN:
-    ;write your code here
+    mov rbp, rsp; for correct debugging
+
+    ; 8bit = 1 byte
+    ; 16bit = 2 bytes = 1 word
+    ; 32bit = 4 bytes = 2 words = 1 dword(double-word)
+    ; 64bit = 8 bytes = 4 workds = 2 dword = 1 qword (quad-word)
     
-    ; 주석
-    ; 10진수(진법) (0 1 2 3 4 5 6 7 8 9)
-    ; 9 + 1 = 10
+    ; mov reg1, cst
+    ; mov reg1, reg2
     
-    ; 2진수 (0 1)
-    ; 0 1 10
-    ; 0b0 0b1 0b10
+    mov eax, 0x1234
+    mov rbx, 0x12345678
+    mov cl, 0xff
     
-    ; 16진수 (0 1 2 3 4 5 6 7 8 9 A B C D E F)
-    ; 0 1 2 3 4 5 6 7 8 9 A B C D E F 10
-    ; 0x00
+    mov al, 0x00
+    mov rax, rdx
     
-    
-    PRINT_STRING msg
     
     xor rax, rax
     ret
     
-section.data
-    msg db 'Hello World', 0x00
+;section.data

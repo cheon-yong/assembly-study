@@ -5,77 +5,62 @@ global CMAIN
 CMAIN:        
     mov rbp, rsp; for correct debugging
 
-    GET_DEC 1, al
-    GET_DEC 1, num
+    ; 쉬프트(shift) 연산, 논리 (logical)연산
     
-    ;PRINT_DEC 1, al
-    ;NEWLINE
-    ;PRINT_DEC 1, num
-
-    ; 더하기 연산
-    ; add a, b (a = a + b)
-    ; a는 레지스터 or 메모리
-    ; b는 레지스터 or 메모리 or 상수
-    ; 단, a, b 모두 메모리 x
+    mov eax, 0x12345678
+    PRINT_HEX 4, eax
+    NEWLINE
+    shl eax, 8
+    PRINT_HEX 4, eax
+    NEWLINE
+    shr eax, 8
+    PRINT_HEX 4, eax
+    NEWLINE
+    ; 응용 곱셈/나눗셈
+    ; 게임서버에서 objectID를 만들 때
     
-    ; 빼기 연산
-    ; sub a, b (a = a - b)
-    ; 규칙은 더하기와 동일
+    ; 논리연산
+    ; not and or xor
     
+    ; 조건A : 잘생겼다
+    ; 조건B : 키가크다
     
-    add al, 1 ; 레지스터 + 상수
-    PRINT_DEC 1, al ; 1 + 1 = 2
+    ; not A : 잘생겼다의 반대 -> (0이면 1, 1이면 0)
+    ; A and B : 잘생겼고 and 키도 크고 -> 둘다 1이면 1, 아니면 0
+    ; A or B : 잘생겼거나 or 키가 크거나 -> 둘 중 하나라도 1이면 1, 아니면 0
+    ; A xor B : 잘생기고 작거나 or 못생기고 크거나 -> 둘다 1이거나 둘다 0이면 0, 아니면 1
+    
+    mov al, 0b10010101
+    mov bl, 0b01111100
+    
+    and al, bl ; al = al and bl
+    PRINT_HEX 1, al
     NEWLINE
     
-    add al, [num] ; 레지스터 + 메모리
-    PRINT_DEC 1, al ; 2 + 2 = 4
+    not al
+    PRINT_HEX 1, al
     NEWLINE
     
-    mov bl, 3
-    add al, bl  ; 레지스터 + 레지스터 
-    PRINT_DEC 1, al ; 3 + 4 = 7
+    ; 응용 사례 : bitflag
+    
+    mov al, 0b10010101
+    mov bl, 0b01111100
+    
     NEWLINE
-    
-    add [num], byte 1 ; 메모리 + 상수
-    PRINT_DEC 1, [num] ; 2 + 1 = 3
+    PRINT_HEX 1, al
     NEWLINE
-    
-    add [num], al ; 메모리 + 레지스터
-    PRINT_DEC 1, [num] ; 3 + 7 + 10
+    xor al, bl
+    PRINT_HEX 1, al
     NEWLINE
-    
-    ; 곱하기 연산
-    ; mul reg
-    ; - mul bl => al * bl
-    ; -- 연산 결과를 ax에 저장
-    ; - mul bx => ax * bx
-    ; -- 연산 결과는 dx(상위 16비트) ax(하위16비트)에 저장
-    ; - mul ebx => eax * ebx
-    
-    ; ex) 5 * 8 은?
-    mov ax, 0
-    mov al, 5
-    mov bl, 8
-    mul bl
-    PRINT_DEC 2, ax
+    xor al, bl
+    PRINT_HEX 1, al
     NEWLINE
+    ; 동일한 값으로 xor 두번하면 자기 자신으로 되돌아오는 특성
+    ; 암호학에서 유용하다! (value xor key)
     
-    ; 나누기 연산
-    ; div reg
-    ; - div bl => ax / bl
-    ; -- 연산 결과는 al(몫) ah(나머지)
-    
-    ; ex) 100 / 3 은?
-    mov ax, 100
-    mov bl, 3
-    div bl
-    PRINT_DEC 1, al ; 100 / 3 = 33 * 3 + 1
-    NEWLINE
-    mov al, ah
-    PRINT_DEC 1, al
-    
-    
-    
+    ; 자기 자신을 xor하면 0 mov보다 빠름
+    xor al, al
+    PRINT_HEX 1, al
     
     xor rax, rax
     ret

@@ -21,26 +21,26 @@ CMAIN:
     ; JG : JumpGreater : 크면 jump
     ; JL
     ; JLE ....
-    
-    ; 두 숫자가 같으면 1, 아니면 0을 출력
-    mov rax, 10
-    mov rbx, 10
-    
-    cmp rax, rbx
+ 
+    ; 연습 문제 : 어떤 숫자(1 ~ 100)가 짝수면 1, 홀수면 0을 출력
+    ; 
+
+    mov ax, 42
+    mov bl, 2
+    div bl
+   
+    cmp ah, 1
     je LABEL_EQUAL
     
-    ; je에 의해 점프하지 않았다면 같지 않다는 의미
-    mov rcx, 0
+    mov rcx, 1
     jmp LABEL_EQUAL_END
     
 LABEL_EQUAL:
-    mov rcx, 1
+    mov rcx, 0
 LABEL_EQUAL_END:
-    
     PRINT_HEX 1, rcx
     NEWLINE
-    
-    
+        
     xor rax, rax
     ret
     

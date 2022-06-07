@@ -5,42 +5,21 @@ global CMAIN
 CMAIN:        
     mov rbp, rsp; for correct debugging
 
-    ; 분기문 (if)
-    ; 특정 조건에 따라서 코드 흐름을 제어하는 것
-    ; ex) 스킬 버튼을 눌렀는가? YES -> 스킬 사용
-    ; ex) 제한 시간 내에 던전 입장 수락 버튼을 눌렀는가? YES -> 입장, NO -> 던전 취소
+    ; 반복문 (while for)
+    ; 특정 조건을 만족할 때까지 반복해서 실행
     
-    ; 조건 -> 흐름
-    ; CMP dst, src (dst가 기준)
-    ; 비교를 한 결과물은 Flag Register에 저장
+    ; ex) Hello World를 10번 출력해야한다면?
+    mov ecx, 10
     
-    ; JUMP [label] 시리즈
-    ; JMP : 무조건 jump
-    ; JE : JumpEquals 같으면 jump
-    ; JNE : JumpNotEquals 다르면 jump
-    ; JG : JumpGreater : 크면 jump
-    ; JL
-    ; JLE ....
- 
-    ; 연습 문제 : 어떤 숫자(1 ~ 100)가 짝수면 1, 홀수면 0을 출력
-    ; 
-
-    mov ax, 42
-    mov bl, 2
-    div bl
-   
-    cmp ah, 1
-    je LABEL_EQUAL
-    
-    mov rcx, 1
-    jmp LABEL_EQUAL_END
-    
-LABEL_EQUAL:
-    mov rcx, 0
-LABEL_EQUAL_END:
-    PRINT_HEX 1, rcx
+LABEL_LOOP:
+    PRINT_STRING msg
     NEWLINE
-        
+    dec ecx; sub ecx, 1과 동일
+    cmp ecx, 0
+    jne LABEL_LOOP
+    
+    ; 연습 문제) 1에서 100까지의 합을 구하는 프로그램 1+2+3+...
+    
     xor rax, rax
     ret
     
@@ -52,8 +31,8 @@ LABEL_EQUAL_END:
     ; [변수이름] [크기] [초기값]
     ; [크기] db(1) dw(2) dd(4) dq(8)
     
-;section .data
-
+section .data
+    msg db 'Hello World', 0x00
     ; 엔디안
     ; 빅 엔디안 vs 리틀엔디안
     ; - 빅 엔디안 : 숫자 비교에 유리 (큰 숫자만 비교하면 편하기 때문)

@@ -14,11 +14,22 @@ CMAIN:
 LABEL_LOOP:
     PRINT_STRING msg
     NEWLINE
-    dec ecx; sub ecx, 1과 동일
+    dec ecx ; sub ecx, 1과 동일
     cmp ecx, 0
     jne LABEL_LOOP
     
     ; 연습 문제) 1에서 100까지의 합을 구하는 프로그램 1+2+3+...
+    
+    mov eax, 100
+    xor ebx, ebx
+L1:
+    add ebx, eax
+    dec eax
+    cmp eax, 0
+    jne L1
+    
+    PRINT_DEC 2, ebx
+    
     
     xor rax, rax
     ret

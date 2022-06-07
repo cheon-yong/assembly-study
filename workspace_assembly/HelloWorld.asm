@@ -28,7 +28,21 @@ L1:
     cmp eax, 0
     jne L1
     
-    PRINT_DEC 2, ebx
+    PRINT_DEC 4, ebx
+    NEWLINE
+    
+    ; loop [라벨]
+    ; - ecx에 반복 횟수
+    ; - loop 할 때마다 ecx 1 감소. 0이면 빠져나감 아니면 라벨로 이동
+    
+    mov ecx, 100
+    xor ebx, ebx;
+LABEL_LOOP_SUM:
+    add ebx, ecx
+    loop LABEL_LOOP_SUM
+    
+    PRINT_DEC 4, ebx
+    NEWLINE
     
     
     xor rax, rax

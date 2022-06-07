@@ -5,45 +5,30 @@ global CMAIN
 CMAIN:        
     mov rbp, rsp; for correct debugging
 
-    ; 반복문 (while for)
-    ; 특정 조건을 만족할 때까지 반복해서 실행
+    ; 배열과 주소
     
-    ; ex) Hello World를 10번 출력해야한다면?
-    mov ecx, 10
+    ; 배열 : 동일한 타입의 데이터 묶음
+    ; - 배열을 구성하는 각 값을 배열 요소(element)라고 함
+    ; - 배열의 위치를 가리키는 숫자를 인덱스(index)라고 함
     
-LABEL_LOOP:
-    PRINT_STRING msg
+    mov rax, a
+    
+    ; 연습문제 : a배열의 모든 데이터를 출력하기
+    xor ecx, ecx
+LABEL_PRINT_A:
+    ;PRINT_HEX 1, [a+ecx]
+    ;NEWLINE
+    inc ecx; add ecx, 1
+    cmp ecx, 5
+    jne LABEL_PRINT_A
+    
+    xor ecx, ecx
+LABEL_PRINT_B:
+    PRINT_HEX 2, [b+ecx*2]
     NEWLINE
-    dec ecx ; sub ecx, 1과 동일
-    cmp ecx, 0
-    jne LABEL_LOOP
-    
-    ; 연습 문제) 1에서 100까지의 합을 구하는 프로그램 1+2+3+...
-    
-    mov eax, 100
-    xor ebx, ebx
-L1:
-    add ebx, eax
-    dec eax
-    cmp eax, 0
-    jne L1
-    
-    PRINT_DEC 4, ebx
-    NEWLINE
-    
-    ; loop [라벨]
-    ; - ecx에 반복 횟수
-    ; - loop 할 때마다 ecx 1 감소. 0이면 빠져나감 아니면 라벨로 이동
-    
-    mov ecx, 100
-    xor ebx, ebx;
-LABEL_LOOP_SUM:
-    add ebx, ecx
-    loop LABEL_LOOP_SUM
-    
-    PRINT_DEC 4, ebx
-    NEWLINE
-    
+    inc ecx
+    cmp ecx, 5
+    jne LABEL_PRINT_B    
     
     xor rax, rax
     ret
@@ -58,12 +43,9 @@ LABEL_LOOP_SUM:
     
 section .data
     msg db 'Hello World', 0x00
-    ; 엔디안
-    ; 빅 엔디안 vs 리틀엔디안
-    ; - 빅 엔디안 : 숫자 비교에 유리 (큰 숫자만 비교하면 편하기 때문)
-    ; - 리틀 엔디안 : 캐스팅에 유리 (작은 값을 불러오기 편함)
+    a db 0x01, 0x02, 0x03, 0x04, 0x05 ; 5 * 1 = 5바이트
+    b times 5 dw 1 ; 5 * 2 = 10 바이트
     
-
     ; 초기화 되지 않은 데이터
     ; [변수이름] [크기] [초기값]
     ; [크기] resb(1) resw(2) resd(4) resq(8)
